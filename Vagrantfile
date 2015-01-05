@@ -14,7 +14,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	end
 
 	config.vm.box = "hashicorp/precise32"
-	config.vm.provision :shell, :path => "bootstrap.sh"
+	config.vm.provision :shell, :privileged => true,  :path => "bootstrap_root.sh"
+	config.vm.provision :shell, :privileged => false, :path => "bootstrap_user.sh"
 
 	config.vm.network "forwarded_port", guest: 3044, host: 3044
 	config.vm.network "forwarded_port", guest: 27017, host: 27017
