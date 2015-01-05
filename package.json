@@ -1,0 +1,9 @@
+{
+	"name": "app-monitoring",
+	"description": "Catch alert from multiple sources and save them",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"mongodb": "*"
+	}
+}
