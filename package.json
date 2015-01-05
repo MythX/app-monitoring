@@ -4,12 +4,13 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "body-parser": "^1.10.1",
+    "body-parser": "^1.10.1"
     "express": "^4.10.7",
     "express-namespace": "^0.1.1",
     "http": "0.0.0",
     "method-override": "^2.3.1",
     "mongodb": "*",
-    "path": "^0.4.9"
+    "path": "^0.4.9",
+    "socket.io": "^1.2.1"
   }
 }

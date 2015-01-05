@@ -1,11 +1,11 @@
 {
 	"name": "app-monitoring",
 	"dependencies": {
-		"modernizr"	        : "latest",
 		"jquery"	        : "1.10.2",
 		"angular"	        : "1.2.0-rc.3",
 		"angular-route"	    : "1.2.0-rc.3",
 		"angular-resource"  : "1.2.0-rc.3",
-		"bootstrap"	        : "latest"
+		"bootstrap"	        : "latest",
+		"socket.io-client"  : "^1.2.1"
 	}
 }

@@ -32,3 +32,9 @@ Retreive opened alert list :
 
     http://127.0.0.1:3044/alertsGroup
 
+
+	
+Icons
+=====
+
+Thanks to Gordon Irving : http://www.iconarchive.com/show/activity-monitor-icons-by-gordon-irving/Activity-Monitor-icon.html

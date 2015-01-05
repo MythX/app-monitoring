@@ -11,15 +11,17 @@ var methodOverride = require('method-override');
 
 var alert        = require('./routes/alerts');
 var alertsGroup  = require('./routes/alertsGroup');
+var socket       = require('./routes/socket');
 
 require('express-namespace');
 
-
 // Create the core web app container (`app`), bind and HTTP server to it
 // (`server`) and determine the full path for public assets.
-var app = express();
+var app    = express();
 var server = http.createServer(app);
-var publicPath = path.join(__dirname);
+var io     = require('socket.io')(server);
+
+var publicPath = path.join(__dirname) + '/assets/';
 
 
 // Rest webservice 
@@ -51,5 +53,33 @@ app.use(express.static(publicPath));
 
 
 server.listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+  console.info('Express server listening on port ' + app.get('port'));
 });
+
+
+// socket listening
+// ----------------
+
+io.sockets.on('connection', function(s) {
+    alertsGroup.findAllAndTrigger(function(alertsGroupList) {
+        alert.findAllAndTrigger(function(alertList) {
+            socket.onConnection(s, alertsGroupList, alertList);
+        });
+    });
+    
+    s.on('refresh', function() {
+        console.log('client want fresh data');
+        alert.findAllAndTrigger(function(alertList) {
+            alertsGroup.findAllAndTrigger(function(alertsGroupList) {
+                socket.onConnection(s, alertsGroupList, alertList);
+            });
+        });
+    });
+});
+
+alert.setOnChangeHook(function(newAlertList) {
+    alertsGroup.findAllAndTrigger(function(alertsGroupList) {
+        socket.broadcast_alert_list_changed(io.sockets, alertsGroupList, newAlertList);
+    });
+});
+

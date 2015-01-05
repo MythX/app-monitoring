@@ -11,7 +11,7 @@ var db = new Db("alerts", server, {safe:true});
 
 db.open(function(err, db) {
     if(!err) {
-        console.log("Connection to database is opened");
+        console.info("Connection to database is opened");
     } else {
         console.error("Failed to connect to mongo database : " + err);
     }
