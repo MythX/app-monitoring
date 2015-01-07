@@ -11,20 +11,20 @@
 	  <th><a href="" ng-click="alertsGroupSortPredicate = 'subtopic'; reverse=!reverse">Sous-topic</a></th>
       <th><a href="" ng-click="alertsGroupSortPredicate = 'assigned'; reverse=!reverse">Assigné</a></th>
       <th><a href="" ng-click="alertsGroupSortPredicate = 'message'; reverse=!reverse">Message</a></th>
-      <th><a href="" ng-click="alertsGroupSortPredicate = 'criticity'; reverse=!reverse">Criticité</a></th>
+      <th><a href="" ng-click="alertsGroupSortPredicate = 'priority'; reverse=!reverse">Priorité</a></th>
       <th><a href="" ng-click="alertsGroupSortPredicate = 'beginDate'; reverse=!reverse">Première alerte</a></th>
       <th><a href="" ng-click="alertsGroupSortPredicate = 'endDate'; reverse=!reverse">Dernière alerte</a></th>
       <th><a href="" ng-click="alertsGroupSortPredicate = 'action'; reverse=!reverse">Action</a></th>
     </tr>
   </thead>
   <tbody>
-      <tr ng-repeat="alertsGroup in alertsGroups | filter:search | orderBy:alertsGroupSortPredicate:reverse" ng-class="convertCriticityToClass(alertsGroup.criticity)">
+      <tr ng-repeat="alertsGroup in alertsGroups | filter:search | orderBy:alertsGroupSortPredicate:reverse" ng-class="convertPriorityToClass(alertsGroup.priority)">
           <td><code><a href="#/alert-list/{{alertsGroup._id}}">{{alertsGroup._id}}</a></code>&nbsp;<span class="badge">{{alertsGroup.occurenceCount}}</span></td>
           <td>{{alertsGroup.topic}}</td>
 		  <td>{{alertsGroup.subtopic}}</td>
           <td>{{alertsGroup.assigned}}</td>
           <td>{{alertsGroup.message | filter:ellipsis:20}}</td>
-          <td>{{alertsGroup.criticity}}</td>
+          <td>{{alertsGroup.priority}}</td>
           <td>{{alertsGroup.beginDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
           <td>{{alertsGroup.endDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
           <td>{{alertsGroup.action}}</td>

@@ -23,12 +23,12 @@ Push a new alert :
     curl -XPOST '127.0.0.1:8080/alert' -H "Content-Type: application/json" --data '{
          "topic" : "My topic",
          "subtopic" : "My subtopic",
-         "criticity" : "MAJOR",
+         "priority" : "MAJOR",
          "message" : "The message",
          "action" : "Nothing to do :)"
     }'
 
-Retreive opened alert list :
+Retrieve opened alert list :
 
     http://127.0.0.1:8080/alertsGroup
 	

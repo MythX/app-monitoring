@@ -55,17 +55,17 @@ function AlertListController($scope, $location, $routeParams, AlertsGroup) {
         });
     }
 
-    $scope.convertCriticityToClass = function(criticity) {
-        if (criticity === 'BLOCKER') {
+    $scope.convertPriorityToClass = function(priority) {
+        if (priority === 'BLOCKER') {
             return "danger";
         }
-        else if (criticity === 'CRITICAL') {
+        else if (priority === 'CRITICAL') {
             return "warning";
         }
-        else if (criticity === 'MAJOR') {
+        else if (priority === 'MAJOR') {
             return "info";
         }
-        else if (criticity === 'WARNING') {
+        else if (priority === 'WARNING') {
             return "";
         }
         return "success";

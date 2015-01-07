@@ -21,8 +21,8 @@
                         <td>{{alertsGroup.subtopic}}</td>
                     </tr>
                     <tr>
-                        <td>Criticité</td>
-                        <td>{{alertsGroup.criticity}}</td>
+                        <td>Priorité</td>
+                        <td>{{alertsGroup.priority}}</td>
                     </tr>
                     <tr>
                         <td>Message</td>
@@ -92,17 +92,17 @@
 	  <th><a href="" ng-click="alertSortPredicate = 'subtopic'; reverse=!reverse">Sous-topic</a></th>
       <th><a href="" ng-click="alertSortPredicate = 'message'; reverse=!reverse">Message</a></th>
       <th><a href="" ng-click="alertSortPredicate = 'date'; reverse=!reverse">Date</a></th>
-      <th><a href="" ng-click="alertSortPredicate = 'criticity'; reverse=!reverse">Criticité</a></th>
+      <th><a href="" ng-click="alertSortPredicate = 'priority'; reverse=!reverse">Priorité</a></th>
       <th><a href="" ng-click="alertSortPredicate = 'action'; reverse=!reverse">Action</a></th>
     </tr>
   </thead>
   <tbody>
-      <tr ng-repeat="alert in alerts | filter:search | orderBy:alertSortPredicate:reverse" ng-class="convertCriticityToClass(alert.criticity)">
+      <tr ng-repeat="alert in alerts | filter:search | orderBy:alertSortPredicate:reverse" ng-class="convertPriorityToClass(alert.priority)">
           <td>{{alert.topic}}</td>
 		  <td>{{alert.subtopic}}</td>
           <td>{{alert.message | filter:ellipsis:20}}</td>
           <td>{{alert.date | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
-          <td>{{alert.criticity}}</td>
+          <td>{{alert.priority}}</td>
           <td>{{alert.action}}</td>
       </tr>
    </tbody>

@@ -15,19 +15,19 @@ function AlertsGroupListController($scope, $location) {
     });
 
     // default sort
-    $scope.alertsGroupSortPredicate = 'criticity'; // magic alphabetic sort ! ;)
+    $scope.alertsGroupSortPredicate = 'priority'; // magic alphabetic sort ! ;)
     
-    $scope.convertCriticityToClass = function(criticity) {
-        if (criticity === 'BLOCKER') {
+    $scope.convertPriorityToClass = function(priority) {
+        if (priority === 'BLOCKER') {
             return "danger";
         }
-        else if (criticity === 'CRITICAL') {
+        else if (priority === 'CRITICAL') {
             return "warning";
         }
-        else if (criticity === 'MAJOR') {
+        else if (priority === 'MAJOR') {
             return "info";
         }
-        else if (criticity === 'WARNING') {
+        else if (priority === 'WARNING') {
             return "";
         }
         return "success";

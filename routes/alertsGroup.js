@@ -50,7 +50,7 @@ exports.findById = function(req, res) {
 exports.add = function(alert, callback) {
     var alertsGroup = {
         action         : alert.action,
-        criticity      : alert.criticity,
+        priority       : alert.priority,
         topic          : alert.topic,
 		subtopic       : alert.subtopic,
         message        : alert.message,
@@ -141,7 +141,7 @@ exports.delete = function(req, res) {
 exports.getOpenGroupAndTrigger = function(alert, callback) {
     alert_db.db.collection(collection, function(err, collection) {
         collection.findOne({'action'    : alert.action, 
-                            'criticity' : alert.criticity,
+                            'priority'  : alert.priority,
                             'topic'     : alert.topic,
 							'subtopic'  : alert.subtopic,
                             'message'   : alert.message,
