@@ -31,3 +31,13 @@ Push a new alert :
 Retreive opened alert list :
 
     http://127.0.0.1:8080/alertsGroup
+	
+	
+Basic HTTP authentication
+===========================
+
+You just have to move `users.htpasswd.example` to `users.htpasswd`, and restart node server. Now login is required ! (use xavier:xavier to pass it).
+
+Note that webservices will also need http authentication.
+
+

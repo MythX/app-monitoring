@@ -8,6 +8,8 @@ var http	       = require('http');
 var path	       = require('path');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+var auth           = require('http-auth');
+var fs             = require('fs');
 
 var alert        = require('./routes/alerts');
 var alertsGroup  = require('./routes/alertsGroup');
@@ -23,7 +25,21 @@ var server = http.createServer(app);
 var io     = require('socket.io')(server);
 
 var publicPath = path.join(__dirname) + '/assets/';
+var httpAuthentificationFilePath = path.join(__dirname) + '/private/users.htpasswd';
 
+
+// HTTP authentification 
+// ---------------------
+if (fs.existsSync(httpAuthentificationFilePath)) {
+	logger.info('Using http authentification file (' + httpAuthentificationFilePath + ')');
+	var basic = auth.basic({
+		realm: "Simon Area.",
+		file: httpAuthentificationFilePath
+	});
+	app.use(auth.connect(basic));
+} else {
+	logger.warn('No http authentification file found (' + httpAuthentificationFilePath + ')');
+}
 
 // Rest webservice 
 // ---------------
