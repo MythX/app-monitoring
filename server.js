@@ -31,13 +31,13 @@ var jsonParser = bodyParser.json();
 app.get('/alertsGroup', alertsGroup.findAll);		// only opened alerts
 app.get('/alertsGroup/:id', alertsGroup.findById);
 app.get('/alertsInGroup/:id', alert.findByGroupId);	// that's not an error ! ;)
-app.put('/alertsGroup', jsonParser, alertsGroup.add);
+app.post('/alertsGroup', jsonParser, alertsGroup.add);
 app.put('/alertsGroup', jsonParser, alertsGroup.update);
 app.delete('/alertsGroup/:id', alertsGroup.delete);
 
 app.get('/alert', alert.findAll);
 app.get('/alert/:id', alert.findById);
-app.put('/alert', jsonParser, alert.add);
+app.post('/alert', jsonParser, alert.add);
 app.put('/alert/:id', jsonParser, alert.update);
 app.delete('/alert/:id', alert.delete);
 
@@ -46,7 +46,7 @@ app.delete('/alert/:id', alert.delete);
 // -------------
 
 // Configuration and middleware for all environments (dev, prod, etc.)
-app.set('port', process.env.PORT || 3044);
+app.set('port', process.env.PORT || 8080);
 app.use(methodOverride());
 // Static file serving
 app.use(express.static(publicPath));
@@ -59,7 +59,6 @@ server.listen(app.get('port'), function(){
 
 // socket listening
 // ----------------
-
 io.sockets.on('connection', function(s) {
     alertsGroup.findAllAndTrigger(function(alertsGroupList) {
         alert.findAllAndTrigger(function(alertList) {

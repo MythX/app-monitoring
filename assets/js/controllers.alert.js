@@ -14,7 +14,7 @@ function AlertListController($scope, $location, $routeParams, AlertsGroup) {
     
 	$scope.alerts = [];
 
-    var socket = io.connect('http://127.0.0.1/', 3044);
+    var socket = io.connect('http://127.0.0.1:8080');
     
     socket.on('alert_list_changed', function (newAlertList) {
         console.info("Updating alert list...");

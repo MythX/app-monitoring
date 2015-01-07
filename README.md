@@ -20,7 +20,7 @@ Webservice usage example
 
 Push a new alert :
 
-    curl -XPUT '127.0.0.1:3044/alert' -H "Content-Type: application/json" --data '{
+    curl -XPOST '127.0.0.1:8080/alert' -H "Content-Type: application/json" --data '{
          "topic" : "My topic",
          "subtopic" : "My subtopic",
          "criticity" : "MAJOR",
@@ -30,11 +30,4 @@ Push a new alert :
 
 Retreive opened alert list :
 
-    http://127.0.0.1:3044/alertsGroup
-
-
-	
-Icons
-=====
-
-Thanks to Gordon Irving : http://www.iconarchive.com/show/activity-monitor-icons-by-gordon-irving/Activity-Monitor-icon.html
+    http://127.0.0.1:8080/alertsGroup
