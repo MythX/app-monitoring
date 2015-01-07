@@ -12,6 +12,7 @@ var methodOverride = require('method-override');
 var alert        = require('./routes/alerts');
 var alertsGroup  = require('./routes/alertsGroup');
 var socket       = require('./routes/socket');
+var logger       = require("./utils/logger");
 
 require('express-namespace');
 
@@ -53,7 +54,7 @@ app.use(express.static(publicPath));
 
 
 server.listen(app.get('port'), function(){
-  console.info('Express server listening on port ' + app.get('port'));
+  logger.info('Express server listening on port ' + app.get('port'));
 });
 
 
@@ -67,7 +68,7 @@ io.sockets.on('connection', function(s) {
     });
     
     s.on('refresh', function() {
-        console.log('client want fresh data');
+        logger.verbose('client want fresh data');
         alert.findAllAndTrigger(function(alertList) {
             alertsGroup.findAllAndTrigger(function(alertsGroupList) {
                 socket.onConnection(s, alertsGroupList, alertList);

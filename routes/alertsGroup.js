@@ -1,6 +1,7 @@
 var mongo 		= require('mongodb');
 var BSON 		= mongo.BSONPure;
 var alert_db 	= require('../utils/mongo-connection');
+var logger      = require("../utils/logger");
 
 require('express-namespace');
 
@@ -28,7 +29,7 @@ exports.findAll = function(req, res) {
 	Find one
 */
 exports.findByIdAndTrigger = function(id, callback) {
-    console.log('Retrieving ' + collection + ' : ' + id);
+    logger.verbose('Retrieving ' + collection + ' : ' + id);
     alert_db.db.collection(collection, function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
             callback(item);
@@ -59,13 +60,14 @@ exports.add = function(alert, callback) {
         state          : 'OPEN'
     };
 
-    console.log('Adding ' + collection + ' : ' + JSON.stringify(alertsGroup));
+    logger.verbose('Adding ' + collection + ' : ' + JSON.stringify(alertsGroup));
     alert_db.db.collection(collection, function(err, collection) {
         collection.insert(alertsGroup, {safe:true}, function(err, result) {
             if (err) {
+				logger.error("Failed to create " + collection + " - " + err);
                 callback({'error':'An error has occurred'});
             } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
+                logger.verbose('Success: ' + JSON.stringify(result[0]));
                 triggerOnChangeHook();
                 callback(result[0]);
             }
@@ -77,16 +79,16 @@ exports.add = function(alert, callback) {
 	Update
 */
 exports.$update = function(id, alertsGroup, callback) {
-    console.log('Updating ' + collection + ' : ' + id);
+    logger.verbose('Updating ' + collection + ' : ' + id);
     delete alertsGroup._id;
-    console.log(JSON.stringify(alertsGroup));
+    logger.verbose(JSON.stringify(alertsGroup));
     alert_db.db.collection(collection, function(err, collection) {
         collection.update({'_id':new BSON.ObjectID(id)}, alertsGroup, {safe:true}, function(err, result) {
             if (err) {
-                console.log('Error updating ' + collection + ' : ' + err);
+                logger.error('Error updating ' + collection + ' : ' + err);
                 callback({'error':'An error has occurred'});
             } else {
-                console.log('' + result + ' document(s) updated');
+                logger.verbose('' + result + ' document(s) updated');
                 triggerOnChangeHook();
                 callback(alertsGroup);
             }
@@ -97,7 +99,7 @@ exports.$update = function(id, alertsGroup, callback) {
 exports.update = function(req, res) {
     var alertsGroup = req.body;
     var id = alertsGroup._id;
-    console.log('Updating ' + collection + ' : ' + id);
+    logger.verbose('Updating ' + collection + ' : ' + id);
     
     exports.$update(id, alertsGroup, function(result) {
         res.send(result);
@@ -117,13 +119,14 @@ exports.addAlertInGroup = function(alert, callback) {
 */
 exports.delete = function(req, res) {
     var id = req.params.id;
-    console.log('Deleting ' + collection + ' : ' + id);
+    logger.verbose('Deleting ' + collection + ' : ' + id);
     alert_db.db.collection(collection, function(err, collection) {
         collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
             if (err) {
+				logger.error("Failed to delete " + collection + " - " + err);
                 res.send({'error':'An error has occurred - ' + err});
             } else {
-                console.log('' + result + ' document(s) deleted');
+                logger.verbose('' + result + ' document(s) deleted');
                 triggerOnChangeHook();
                 res.send(req.body);
             }
@@ -155,7 +158,7 @@ exports.getOpenGroupAndTrigger = function(alert, callback) {
 var onChangeHookAction = null;
 
 exports.setOnChangeHook = function(action) {
-    console.log("Callback onChange is set for collection " + collection);
+    logger.verbose("Callback onChange is set for collection " + collection);
     onChangeHookAction = action;
 }
 

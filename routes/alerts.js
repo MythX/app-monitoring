@@ -2,6 +2,7 @@ var mongo 		= require('mongodb');
 var BSON 		= mongo.BSONPure;
 var alertsGroup = require('./alertsGroup');
 var alert_db 	= require('../utils/mongo-connection');
+var logger      = require("../utils/logger");
 
 require('express-namespace');
 
@@ -29,7 +30,7 @@ exports.findAll = function(req, res) {
 */
 exports.findById = function(req, res) {
     var id = req.params.id;
-    console.log('Retrieving ' + collection + ' : ' + id);
+    logger.verbose('Retrieving ' + collection + ' : ' + id);
     alert_db.db.collection(collection, function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
             res.send(item);
@@ -39,7 +40,7 @@ exports.findById = function(req, res) {
 
 exports.findByGroupId = function(req, res) {
     var id = req.params.id;
-    console.log('Retrieving ' + collection + ' for group id : ' + id);
+    logger.verbose('Retrieving ' + collection + ' for group id : ' + id);
     alert_db.db.collection(collection, function(err, collection) {
         collection.find({'alertsGroup._id':new BSON.ObjectID(id)}).toArray(function(err, items) {
             res.send(items);
@@ -51,13 +52,14 @@ exports.findByGroupId = function(req, res) {
 	Create
 */
 exports.$add = function(alert, callback) {
-    console.log('Adding ' + collection + ' : ' + JSON.stringify(alert));
+    logger.verbose('Adding ' + collection + ' : ' + JSON.stringify(alert));
     alert_db.db.collection(collection, function(err, collection) {
         collection.insert(alert, {safe:true}, function(err, result) {
             if (err) {
+				logger.error('Failed to add ' + collection + ' - ' + err);
                 callback({'error':'An error has occurred'});
             } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
+                logger.verbose('Success: ' + JSON.stringify(result[0]));
                 triggerOnChangeHook();
                 callback(result[0]);
             }
@@ -66,7 +68,7 @@ exports.$add = function(alert, callback) {
 };
 
 exports.add = function(req, res) {
-	console.log(req.body);
+	logger.verbose(req.body);
     var alert = req.body;
     alert.date = new Date();
 
@@ -97,15 +99,15 @@ exports.update = function(req, res) {
     var id = req.params.id;
     var alert = req.body;
     alert.date = new Date();
-    console.log('Updating ' + collection + ' : ' + id);
-    console.log(JSON.stringify(alert));
+    logger.verbose('Updating ' + collection + ' : ' + id);
+    logger.verbose(JSON.stringify(alert));
     alert_db.db.collection(collection, function(err, collection) {
         collection.update({'_id':new BSON.ObjectID(id)}, alert, {safe:true}, function(err, result) {
             if (err) {
-                console.log('Error updating ' + collection + ' : ' + err);
+                logger.error('Error updating ' + collection + ' : ' + err);
                 res.send({'error':'An error has occurred'});
             } else {
-                console.log('' + result + ' document(s) updated');
+                logger.verbose('' + result + ' document(s) updated');
                 triggerOnChangeHook();
                 res.send(alert);
             }
@@ -118,13 +120,14 @@ exports.update = function(req, res) {
 */
 exports.delete = function(req, res) {
     var id = req.params.id;
-    console.log('Deleting ' + collection + ' : ' + id);
+    logger.verbose('Deleting ' + collection + ' : ' + id);
     alert_db.db.collection(collection, function(err, collection) {
         collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
             if (err) {
+				logger.error("Error while deleting " + collection + " - " + err);
                 res.send({'error':'An error has occurred - ' + err});
             } else {
-                console.log('' + result + ' document(s) deleted');
+                logger.verbose('' + result + ' document(s) deleted');
                 triggerOnChangeHook();
                 res.send(req.body);
             }
@@ -138,7 +141,7 @@ exports.delete = function(req, res) {
 var onChangeHookAction = null;
 
 exports.setOnChangeHook = function(action) {
-    console.log("Callback onChange is set for collection " + collection);
+    logger.info("Callback onChange is set for collection " + collection);
     onChangeHookAction = action;
 }
 
