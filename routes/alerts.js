@@ -60,7 +60,6 @@ exports.$add = function(alert, callback) {
                 callback({'error':'An error has occurred'});
             } else {
                 logger.verbose('Success: ' + JSON.stringify(result[0]));
-                triggerOnChangeHook();
                 callback(result[0]);
             }
         });
