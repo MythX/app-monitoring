@@ -88,7 +88,7 @@ exports.$update = function(id, alertsGroup, callback) {
                 logger.error('Error updating ' + collection + ' : ' + err);
                 callback({'error':'An error has occurred'});
             } else {
-                logger.verbose('' + result + ' document(s) updatedee');
+                logger.verbose('' + result + ' document(s) updated');
                 triggerOnChangeHook();
                 callback(alertsGroup);
             }
