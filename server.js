@@ -63,7 +63,7 @@ app.delete('/alert/:id', alert.delete);
 // -------------
 
 // Configuration and middleware for all environments (dev, prod, etc.)
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 8044);
 app.use(methodOverride());
 // Static file serving
 app.use(express.static(publicPath));
