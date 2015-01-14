@@ -55,8 +55,6 @@ app.delete('/alertsGroup/:id', alertsGroup.delete);
 app.get('/alert', alert.findAll);
 app.get('/alert/:id', alert.findById);
 app.post('/alert', jsonParser, alert.add);
-app.put('/alert/:id', jsonParser, alert.update);
-app.delete('/alert/:id', alert.delete);
 
 
 // Configuration
@@ -93,7 +91,7 @@ io.sockets.on('connection', function(s) {
     });
 });
 
-alert.setOnChangeHook(function(newAlertList) {
+alertsGroup.setOnChangeHook(function(newAlertList) {
     alertsGroup.findAllAndTrigger(function(alertsGroupList) {
         socket.broadcast_alert_list_changed(io.sockets, alertsGroupList, newAlertList);
     });
