@@ -10,7 +10,7 @@ priority = ['BLOCKER', 'CRITICAL', 'MAJOR', 'WARNING']
 message   = ['Hello', 'Bonjour']
 action    = [None, 'xwiki action', 'http://wiki.org/action']
 
-URL="http://localhost:8044/alert"
+URL="http://localhost:8080/alert"
 NUMBER_OF_ALERTS=100
 
 print "Will generate " + str(NUMBER_OF_ALERTS) + " alerts"

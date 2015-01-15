@@ -1,19 +1,52 @@
 {
   "name": "app-monitoring",
-  "description": "Catch alert from multiple sources and save them",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Simple App Monitoring",
+  "keywords": [
+    "OpenShift",
+    "Node.js",
+    "application",
+    "openshift"
+  ],
+  "author": {
+    "name": "Xavier MICHEL",
+    "email": "",
+    "url": "https://github.com/xaviermichel/app-monitoring"
+  },
+  "homepage": "http://www.openshift.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openshift/origin-server"
+  },
+
+  "engines": {
+    "node": ">= 0.10.0",
+    "npm": ">= 1.2.0"
+  },
+
   "dependencies": {
     "body-parser": "~1.10.1",
     "express": "~4.10.7",
     "express-namespace": "~0.1.1",
     "fs": "0.0.2",
     "http": "~0.0.0",
-    "http-auth": "^2.2.5",
+    "http-auth": "~2.2.5",
     "method-override": "~2.3.1",
     "mongodb": "~1.4.27",
     "path": "~0.4.9",
     "socket.io": "~1.2.1",
     "winston": "~0.8.3"
-  }
+  },
+  
+  "devDependencies": {
+  },
+  
+  "scripts": {
+    "start": "node server.js"
+  },
+  
+  "bundleDependencies": [],
+
+  "private": true,
+  "main": "server.js"
 }

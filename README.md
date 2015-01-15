@@ -41,3 +41,19 @@ You just have to move `users.htpasswd.example` to `users.htpasswd`, and restart 
 Note that webservices will also need http authentication.
 
 
+Deployment on openshift
+=======================
+
+Default openshift card comes with an old version of npm, which doesn't support modern syntax (see https://github.com/onepiecejs/nodejs-cantas/pull/21).
+
+So, before pushing on openshift repo, I play :
+
+    bower install
+	
+Note that you may need to configure the proxy, in `.bowerrc` :
+
+    "proxy" : "http://proxy.priv.atos.fr:3128",
+    "https-proxy" : "http://proxy.priv.atos.fr:3128"
+
+And uncomment `/inc` in `.gitignore`.
+	

@@ -33,7 +33,7 @@ var httpAuthentificationFilePath = path.join(__dirname) + '/private/users.htpass
 if (fs.existsSync(httpAuthentificationFilePath)) {
 	logger.info('Using http authentification file (' + httpAuthentificationFilePath + ')');
 	var basic = auth.basic({
-		realm: "Simon Area.",
+		realm: "Restricted Area.",
 		file: httpAuthentificationFilePath
 	});
 	app.use(auth.connect(basic));
@@ -61,13 +61,13 @@ app.post('/alert', jsonParser, alert.add);
 // -------------
 
 // Configuration and middleware for all environments (dev, prod, etc.)
-app.set('port', process.env.PORT || 8044);
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 8080);
 app.use(methodOverride());
 // Static file serving
 app.use(express.static(publicPath));
 
 
-server.listen(app.get('port'), function(){
+server.listen(app.get('port'), process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1', function(){
   logger.info('Express server listening on port ' + app.get('port'));
 });
 
