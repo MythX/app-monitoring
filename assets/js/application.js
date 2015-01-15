@@ -19,3 +19,41 @@ angular.module('appMonitoring', ['ngRoute', 'alertsGroupService']).
             		}
             );
 }]);
+
+angular.module('appMonitoring').filter('priorityToText', function() {
+	return function(input, format) {
+		var priority = input || 'UNDEFINED';
+		if (priority === 'BLOCKER') {
+            return "Bloquant";
+        }
+        else if (priority === 'CRITICAL') {
+            return "Critique";
+        }
+        else if (priority === 'MAJOR') {
+            return "Majeur";
+        }
+        else if (priority === 'WARNING') {
+            return "Attention";
+        }
+        return "";
+	}
+});
+
+angular.module('appMonitoring').filter('priorityToClass', function() {
+	return function(input, format) {
+		var priority = input || 'UNDEFINED';
+		if (priority === 'BLOCKER') {
+            return "danger";
+        }
+        else if (priority === 'CRITICAL') {
+            return "warning";
+        }
+        else if (priority === 'MAJOR') {
+            return "info";
+        }
+        else if (priority === 'WARNING') {
+            return "";
+        }
+        return "success";
+	}
+});

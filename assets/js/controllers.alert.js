@@ -54,21 +54,4 @@ function AlertListController($scope, $location, $routeParams, AlertsGroup) {
         AlertsGroup.update({id: $scope.entryId}, $scope.alertsGroup, function(response) {
         });
     }
-
-    $scope.convertPriorityToClass = function(priority) {
-        if (priority === 'BLOCKER') {
-            return "danger";
-        }
-        else if (priority === 'CRITICAL') {
-            return "warning";
-        }
-        else if (priority === 'MAJOR') {
-            return "info";
-        }
-        else if (priority === 'WARNING') {
-            return "";
-        }
-        return "success";
-    }
-    
 };

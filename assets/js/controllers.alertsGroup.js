@@ -16,21 +16,4 @@ function AlertsGroupListController($scope, $location) {
 
     // default sort
     $scope.alertsGroupSortPredicate = 'priority'; // magic alphabetic sort ! ;)
-    
-    $scope.convertPriorityToClass = function(priority) {
-        if (priority === 'BLOCKER') {
-            return "danger";
-        }
-        else if (priority === 'CRITICAL') {
-            return "warning";
-        }
-        else if (priority === 'MAJOR') {
-            return "info";
-        }
-        else if (priority === 'WARNING') {
-            return "";
-        }
-        return "success";
-    }
-    
 };

@@ -18,16 +18,19 @@
     </tr>
   </thead>
   <tbody>
-      <tr ng-repeat="alertsGroup in alertsGroups | filter:search | orderBy:alertsGroupSortPredicate:reverse" ng-class="convertPriorityToClass(alertsGroup.priority)">
+      <tr ng-repeat="alertsGroup in alertsGroups | filter:search | orderBy:alertsGroupSortPredicate:reverse" ng-class="alertsGroup.priority | priorityToClass">
           <td><code><a href="#/alert-list/{{alertsGroup._id}}">{{alertsGroup._id}}</a></code>&nbsp;<span class="badge">{{alertsGroup.occurenceCount}}</span></td>
           <td>{{alertsGroup.topic}}</td>
 		  <td>{{alertsGroup.subtopic}}</td>
           <td>{{alertsGroup.assigned}}</td>
           <td>{{alertsGroup.message | filter:ellipsis:20}}</td>
-          <td>{{alertsGroup.priority}}</td>
+          <td>{{alertsGroup.priority | priorityToText}}</td>
           <td>{{alertsGroup.beginDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
           <td>{{alertsGroup.endDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
-          <td>{{alertsGroup.action}}</td>
+          <td>
+			<a    ng-if="alertsGroup.action.indexOf('http') === 0" ng-href="{{alertsGroup.action}}">{{alertsGroup.action}}</a>
+			<span ng-if="alertsGroup.action.indexOf('http') !== 0">{{alertsGroup.action}}<span>
+		  </td>
       </tr>
    </tbody>
 </table>
