@@ -41,6 +41,7 @@ if (fs.existsSync(httpAuthentificationFilePath)) {
 	logger.warn('No http authentification file found (' + httpAuthentificationFilePath + ')');
 }
 
+
 // Rest webservice 
 // ---------------
 var jsonParser = bodyParser.json();

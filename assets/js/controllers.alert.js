@@ -1,4 +1,4 @@
-function AlertListController($scope, $location, $routeParams, AlertsGroup) {
+function AlertListController($scope, $location, $routeParams, AlertsGroup, sharedProperties) {
     
     $scope.groupId = $routeParams.groupId;
     
@@ -43,7 +43,8 @@ function AlertListController($scope, $location, $routeParams, AlertsGroup) {
     $scope.reverse = true;
 
     $scope.assignTo = function() {
-        var assigned = 'Xavier'; // not really dynamic for now ;)
+        var assigned = sharedProperties.getCurrentUser().username;
+		console.debug("The alert will be assigned to : " + assigned);
         $scope.alertsGroup.assigned = assigned;
         AlertsGroup.update({id: $scope.entryId}, $scope.alertsGroup, function(response) {
         });

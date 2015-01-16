@@ -57,3 +57,20 @@ angular.module('appMonitoring').filter('priorityToClass', function() {
         return "success";
 	}
 });
+
+angular.module('appMonitoring').service('sharedProperties', function() {
+    var currentUser = localStorage.getItem('currentUser') !==null ? JSON.parse(localStorage.getItem('currentUser')) : { username : 'Unknown' };
+
+	console.info(localStorage.getItem('currentUser'));
+	
+    return {
+        getCurrentUser : function() {
+            return currentUser;
+        },
+		setCurrentUser : function(newCurrentUser) {
+			currentUser = newCurrentUser;
+			console.debug('Store user in local storage');
+			localStorage.setItem('currentUser', JSON.stringify(currentUser));
+		}
+    }
+});
