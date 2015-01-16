@@ -1,3 +1,3 @@
 #!/bin/sh
 
-mongo alerts --eval "db.dropDatabase();"
+mongo appmonitoring --eval "db.dropDatabase();"
