@@ -24,6 +24,15 @@ When the VM is started, you can launch the web server
 	node server.js
 	
 
+Now the server is running, how can I send alerts ?
+==================================================
+
+Your can use some client :
+- [*sh client](https://github.com/xaviermichel/app-monitoring-sh-client)
+
+Or maualy send alert (see next section).
+
+
 Webservice usage example
 ========================
 
