@@ -1,3 +1,12 @@
+What is it ?
+============
+
+App monitoring is an application which receive alerts on webservice and display them on a web interface.
+
+Architecture
+------------
+
+![App-monitoring artchitecture](https://docs.google.com/drawings/d/1t51HaRyTxnXP7mKwMXkIjao-Ve5ollD05kdexK1izsY/pub?w=717&h=661)
 
 Quick start
 ===========
