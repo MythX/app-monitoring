@@ -10,12 +10,12 @@ var Server = mongo.Server,
 	
 var mongodb_host  = process.env.OPENSHIFT_MONGODB_DB_HOST || 'localhost';
 var mongodb_port  = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
-var mongodb_shema = 'appmonitoring';
+var mongodb_db    = 'appmonitoring';
 var mongodb_user  = '';
 var mongodb_pass  = '';
 
 var server = new Server(mongodb_host, mongodb_port, {auto_reconnect: true});
-var db = new Db(mongodb_shema, server, {safe:true});
+var db = new Db(mongodb_db, server, {safe:true});
 
 db.open(function(err, db) {
     if(err) {
