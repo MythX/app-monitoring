@@ -1,7 +1,9 @@
 function AlertsGroupListController($scope, $location) {
 	$scope.alertsGroups = [];
 
-    var socket = io.connect('http://127.0.0.1:8080');
+	var currentLocationRoot = $location.protocol() + '://' + $location.host() + ':' + $location.port();
+    console.info('Websocket connection url : ' + currentLocationRoot);
+	var socket = io.connect(currentLocationRoot);
     
     socket.on('alertsGroup_list_changed', function (newAlertsGroupList) {
         $scope.$apply(function () {
