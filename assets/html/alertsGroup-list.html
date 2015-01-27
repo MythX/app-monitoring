@@ -22,10 +22,15 @@
 		 <span ng-if="'subtopic' == alertsGroupSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
 	     <a href="" ng-click="alertsGroupSortPredicate = 'subtopic'; reverse=!reverse">Sous-topic</a>
 	  </th>
-      <th>
+	  <th>
 	  	 <span ng-if="'assigned' == alertsGroupSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
 		 <span ng-if="'assigned' == alertsGroupSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
 		 <a href="" ng-click="alertsGroupSortPredicate = 'assigned'; reverse=!reverse">Assigné</a>
+	  </th>
+	  <th>
+	  	 <span ng-if="'server' == alertsGroupSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
+		 <span ng-if="'server' == alertsGroupSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+		 <a href="" ng-click="alertsGroupSortPredicate = 'server'; reverse=!reverse">Serveur</a>
 	  </th>
       <th>
 	  	 <span ng-if="'message' == alertsGroupSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
@@ -60,6 +65,7 @@
           <td>{{alertsGroup.topic}}</td>
 		  <td>{{alertsGroup.subtopic}}</td>
           <td>{{alertsGroup.assigned}}</td>
+		  <td>{{alertsGroup.server}}</td>
           <td>{{alertsGroup.message | filter:ellipsis:20}}</td>
           <td>{{alertsGroup.priority | priorityToText}}</td>
           <td>{{alertsGroup.beginDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>

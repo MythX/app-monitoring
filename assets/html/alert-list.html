@@ -24,6 +24,10 @@
                         <td>Priorité</td>
                         <td>{{alertsGroup.priority | priorityToText}}</td>
                     </tr>
+					<tr>
+                        <td>Serveur</td>
+                        <td>{{alertsGroup.server}}</td>
+                    </tr>
                     <tr>
                         <td>Message</td>
                         <td>{{alertsGroup.message}}</td>
@@ -101,6 +105,11 @@
 		 <span ng-if="'subtopic' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
 	     <a href="" ng-click="alertSortPredicate = 'subtopic'; reverse=!reverse">Sous-topic</a>
 	  </th>
+	  <th>
+	  	 <span ng-if="'server' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
+		 <span ng-if="'server' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+		 <a href="" ng-click="alertSortPredicate = 'server'; reverse=!reverse">Serveur</a>
+	  </th>
       <th>
 	  	 <span ng-if="'message' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
 		 <span ng-if="'message' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
@@ -127,6 +136,7 @@
       <tr ng-repeat="alert in alerts | filter:search | orderBy:alertSortPredicate:reverse" ng-class="alert.priority | priorityToClass">
           <td>{{alert.topic}}</td>
 		  <td>{{alert.subtopic}}</td>
+		  <td>{{alertsGroup.server}}</td>
           <td>{{alert.message | filter:ellipsis:20}}</td>
           <td>{{alert.date | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
           <td>{{alert.priority | priorityToText}}</td>

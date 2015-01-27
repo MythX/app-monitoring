@@ -56,6 +56,7 @@ exports.add = function(alert, callback) {
         message        : alert.message,
         beginDate      : alert.date,
         endDate        : alert.date,
+		server         : alert.server,
         occurenceCount : 1,
         state          : 'OPEN'
     };
@@ -145,6 +146,7 @@ exports.getOpenGroupAndTrigger = function(alert, callback) {
                             'topic'     : alert.topic,
 							'subtopic'  : alert.subtopic,
                             'message'   : alert.message,
+							'server'    : alert.server,
                             'state'     : 'OPEN'
                             }, function(err, item) {
             callback(item);
