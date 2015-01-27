@@ -26,7 +26,7 @@ db.open(function(err, db) {
 		
 		if (mongodb_user !== '' && mongodb_pass !== '') {
 			logger.info('Trying to auth on mongodb with user : ' + mongodb_user);
-			db.authenticate('admin', 'c44kDgEpwE_l', function(err, result) {
+			db.authenticate(mongodb_user, mongodb_pass, function(err, result) {
 				if(err) {
 					logger.error("Failed to auth to mongo database : " + err);
 				}
