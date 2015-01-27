@@ -62,9 +62,11 @@ Note that webservices will also need http authentication.
 Deployment on openshift
 =======================
 
-Default openshift card comes with an old version of npm, which doesn't support modern syntax (see https://github.com/onepiecejs/nodejs-cantas/pull/21).
+Static resources
+----------------
+Default openshift card comes with an old version of npm, which doesn't support modern syntax (with '^').
 
-So, before pushing on openshift repo, I play :
+So, before pushing on openshift repo, I run :
 
     bower install
 	
@@ -73,5 +75,12 @@ Note that you may need to configure the proxy, in `.bowerrc` :
     "proxy" : "http://proxy.priv.atos.fr:3128",
     "https-proxy" : "http://proxy.priv.atos.fr:3128"
 
-And uncomment `/inc` in `.gitignore`.
+*And uncomment `/inc` in `.gitignore`.*
 	
+Mongodb connection
+------------------
+You can configure your database connection in `utils/mongo-connection.js`.
+
+Websocket address
+-----------------
+You also have to update websocket address on client side (`assets/js/controllers.alert.js` and `controllers.alertsGroup.js`). Just search `io.connect(...)`.
