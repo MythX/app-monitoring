@@ -1,7 +1,7 @@
-var mongo 		= require('mongodb');
-var BSON 		= mongo.BSONPure;
-var alert_db 	= require('../utils/mongo-connection');
-var logger      = require("../utils/logger");
+var mongo = require('mongodb');
+var BSON = mongo.BSONPure;
+var alert_db = require('../utils/mongo-connection');
+var logger = require("../utils/logger");
 
 require('express-namespace');
 
@@ -13,7 +13,9 @@ var collection = 'alertsGroup';
 */
 exports.findAllAndTrigger = function(callback) {
     alert_db.db.collection(collection, function(err, collection) {
-        collection.find({'state':'OPEN'}).toArray(function(err, items) {
+        collection.find({
+            'state': 'OPEN'
+        }).toArray(function(err, items) {
             callback(items);
         });
     });
@@ -31,7 +33,9 @@ exports.findAll = function(req, res) {
 exports.findByIdAndTrigger = function(id, callback) {
     logger.verbose('Retrieving ' + collection + ' : ' + id);
     alert_db.db.collection(collection, function(err, collection) {
-        collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+        collection.findOne({
+            '_id': new BSON.ObjectID(id)
+        }, function(err, item) {
             callback(item);
         });
     });
@@ -49,24 +53,28 @@ exports.findById = function(req, res) {
 */
 exports.add = function(alert, callback) {
     var alertsGroup = {
-        action         : alert.action,
-        priority       : alert.priority,
-        topic          : alert.topic,
-		subtopic       : alert.subtopic,
-        message        : alert.message,
-        beginDate      : alert.date,
-        endDate        : alert.date,
-		server         : alert.server,
-        occurenceCount : 1,
-        state          : 'OPEN'
+        action: alert.action,
+        priority: alert.priority,
+        topic: alert.topic,
+        subtopic: alert.subtopic,
+        message: alert.message,
+        beginDate: alert.date,
+        endDate: alert.date,
+        server: alert.server,
+        occurenceCount: 1,
+        state: 'OPEN'
     };
 
     logger.verbose('Adding ' + collection + ' : ' + JSON.stringify(alertsGroup));
     alert_db.db.collection(collection, function(err, collection) {
-        collection.insert(alertsGroup, {safe:true}, function(err, result) {
+        collection.insert(alertsGroup, {
+            safe: true
+        }, function(err, result) {
             if (err) {
-				logger.error("Failed to create " + collection + " - " + err);
-                callback({'error':'An error has occurred'});
+                logger.error("Failed to create " + collection + " - " + err);
+                callback({
+                    'error': 'An error has occurred'
+                });
             } else {
                 logger.verbose('Success: ' + JSON.stringify(result[0]));
                 triggerOnChangeHook();
@@ -84,10 +92,16 @@ exports.$update = function(id, alertsGroup, callback) {
     delete alertsGroup._id;
     logger.verbose(JSON.stringify(alertsGroup));
     alert_db.db.collection(collection, function(err, collection) {
-        collection.update({'_id':new BSON.ObjectID(id)}, alertsGroup, {safe:true}, function(err, result) {
+        collection.update({
+            '_id': new BSON.ObjectID(id)
+        }, alertsGroup, {
+            safe: true
+        }, function(err, result) {
             if (err) {
                 logger.error('Error updating ' + collection + ' : ' + err);
-                callback({'error':'An error has occurred'});
+                callback({
+                    'error': 'An error has occurred'
+                });
             } else {
                 logger.verbose('' + result + ' document(s) updated');
                 triggerOnChangeHook();
@@ -101,7 +115,7 @@ exports.update = function(req, res) {
     var alertsGroup = req.body;
     var id = alertsGroup._id;
     logger.verbose('Updating ' + collection + ' : ' + id);
-    
+
     exports.$update(id, alertsGroup, function(result) {
         res.send(result);
     });
@@ -111,7 +125,7 @@ exports.addAlertInGroup = function(alert, callback) {
     exports.findByIdAndTrigger(alert.alertsGroupId, function(alertsGroup) {
         alertsGroup.endDate = alert.date;
         alertsGroup.occurenceCount += 1;
-        exports.$update(alertsGroup._id, alertsGroup, callback);   
+        exports.$update(alertsGroup._id, alertsGroup, callback);
     });
 }
 
@@ -122,10 +136,16 @@ exports.delete = function(req, res) {
     var id = req.params.id;
     logger.verbose('Deleting ' + collection + ' : ' + id);
     alert_db.db.collection(collection, function(err, collection) {
-        collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+        collection.remove({
+            '_id': new BSON.ObjectID(id)
+        }, {
+            safe: true
+        }, function(err, result) {
             if (err) {
-				logger.error("Failed to delete " + collection + " - " + err);
-                res.send({'error':'An error has occurred - ' + err});
+                logger.error("Failed to delete " + collection + " - " + err);
+                res.send({
+                    'error': 'An error has occurred - ' + err
+                });
             } else {
                 logger.verbose('' + result + ' document(s) deleted');
                 triggerOnChangeHook();
@@ -141,14 +161,15 @@ exports.delete = function(req, res) {
 // max result size = 1
 exports.getOpenGroupAndTrigger = function(alert, callback) {
     alert_db.db.collection(collection, function(err, collection) {
-        collection.findOne({'action'    : alert.action, 
-                            'priority'  : alert.priority,
-                            'topic'     : alert.topic,
-							'subtopic'  : alert.subtopic,
-                            'message'   : alert.message,
-							'server'    : alert.server,
-                            'state'     : 'OPEN'
-                            }, function(err, item) {
+        collection.findOne({
+            'action': alert.action,
+            'priority': alert.priority,
+            'topic': alert.topic,
+            'subtopic': alert.subtopic,
+            'message': alert.message,
+            'server': alert.server,
+            'state': 'OPEN'
+        }, function(err, item) {
             callback(item);
         });
     });

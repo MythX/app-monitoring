@@ -4,146 +4,202 @@
 <div class="row">
 
     <div class="col-md-8">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <h3 class="panel-title">Résumé</h3>
-        </div>
-        <div class="panel-body">
-            
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <td>Topic</td>
-                        <td>{{alertsGroup.topic}}</td>
-                    </tr>
-					<tr>
-                        <td>Sous-topic</td>
-                        <td>{{alertsGroup.subtopic}}</td>
-                    </tr>
-                    <tr>
-                        <td>Priorité</td>
-                        <td>{{alertsGroup.priority | priorityToText}}</td>
-                    </tr>
-					<tr>
-                        <td>Serveur</td>
-                        <td>{{alertsGroup.server}}</td>
-                    </tr>
-                    <tr>
-                        <td>Message</td>
-                        <td>{{alertsGroup.message}}</td>
-                    </tr>
-                    <tr>
-                        <td>Première alerte</td>
-                        <td>{{alertsGroup.beginDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
-                    </tr>
-                    <tr>
-                        <td>Dernière alerte</td>
-                        <td>{{alertsGroup.endDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
-                    </tr>
-                    <tr>
-                        <td>Action associée</td>
-						<td>
-							<a    ng-if="alertsGroup.action.indexOf('http') === 0" ng-href="{{alertsGroup.action}}" target="_blank">{{alertsGroup.action}}</a>
-							<span ng-if="alertsGroup.action.indexOf('http') !== 0">{{alertsGroup.action}}<span>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Résumé</h3>
+            </div>
+            <div class="panel-body">
+
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Topic</td>
+                            <td>{{alertsGroup.topic}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sous-topic</td>
+                            <td>{{alertsGroup.subtopic}}</td>
+                        </tr>
+                        <tr>
+                            <td>Priorité</td>
+                            <td>{{alertsGroup.priority | priorityToText}}</td>
+                        </tr>
+                        <tr>
+                            <td>Serveur</td>
+                            <td>{{alertsGroup.server}}</td>
+                        </tr>
+                        <tr>
+                            <td>Message</td>
+                            <td>{{alertsGroup.message}}</td>
+                        </tr>
+                        <tr>
+                            <td>Première alerte</td>
+                            <td>{{alertsGroup.beginDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Dernière alerte</td>
+                            <td>{{alertsGroup.endDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Action associée</td>
+                            <td>
+                                <a ng-if="alertsGroup.action.indexOf('http') === 0" ng-href="{{alertsGroup.action}}" target="_blank">{{alertsGroup.action}}</a>
+                                <span ng-if="alertsGroup.action.indexOf('http') !== 0">{{alertsGroup.action}}<span>
+
 						</td>
+
                     </tr>
+
                 </tbody>
+
             </table>
+
             
+
         </div>
+
       </div>
+
     </div>
+
+
+
 
 
     <div class="col-md-4">
+
       <div class="panel panel-default">
+
         <div class="panel-heading">
+
           <h3 class="panel-title">Actions</h3>
+
         </div>
+
         <div class="panel-body">
+
         
+
             <div ng-show="! isAssigned()" class="alert alert-warning">
+
                 <strong>Attention !</strong> Cette alerte n'a pas encore été prise en compte.
+
             </div>
+
             <div ng-show="! isOpened()" class="alert alert-success">
+
                 <strong>Terminé, </strong> cette alerte a été traitée et fermée.
+
             </div>
+
             <div ng-show="isAssigned()"> 
+
                 Cette alerte est prise en compte par {{alertsGroup.assigned}}
+
             </div>
+
             
+
             <br/>
+
             
+
             <button ng-show="isOpened()" type="button" class="btn btn-default" ng-click="assignTo()">Je prends en compte cette alerte !</button>
+
             
+
             <br/><br/>
+
             
+
             <button ng-show="isAssigned() && isOpened()" type="button" class="btn btn-default" ng-click="closeAlertsGroup()">L'alerte est traitée, je ferme cette alerte.</button> 
+
             
+
         </div>
+
       </div>
+
     </div>
+
+
 
 </div>
 
 
+
+
+
 <h3>Détails des messages d'alerte</h3>
 
+
+
 <input type="text" ng-model="search" class="search-query" placeholder="Filtre" />
+
 <br/><br/>
 
+
+
 <table class="table table-hover">
+
   <thead>
+
     <tr>
+
       <th>
+
 	  	 <span ng-if="'topic' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
-		 <span ng-if="'topic' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-	     <a href="" ng-click="alertSortPredicate = 'topic'; reverse=!reverse">Topic</a>
-	  </th>
-	  <th>
-	  	 <span ng-if="'subtopic' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
-		 <span ng-if="'subtopic' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-	     <a href="" ng-click="alertSortPredicate = 'subtopic'; reverse=!reverse">Sous-topic</a>
-	  </th>
-	  <th>
-	  	 <span ng-if="'server' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
-		 <span ng-if="'server' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-		 <a href="" ng-click="alertSortPredicate = 'server'; reverse=!reverse">Serveur</a>
-	  </th>
-      <th>
-	  	 <span ng-if="'message' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
-		 <span ng-if="'message' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-	     <a href="" ng-click="alertSortPredicate = 'message'; reverse=!reverse">Message</a>
-	  </th>
-      <th>
-	  	 <span ng-if="'date' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
-		 <span ng-if="'date' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-	     <a href="" ng-click="alertSortPredicate = 'date'; reverse=!reverse">Date</a>
-	  </th>
-      <th>
-	  	 <span ng-if="'priority' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
-		 <span ng-if="'priority' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-	     <a href="" ng-click="alertSortPredicate = 'priority'; reverse=!reverse">Priorité</a>
-	  </th>
-      <th>
-	  	 <span ng-if="'action' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up"   aria-hidden="true"></span>
-		 <span ng-if="'action' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-	     <a href="" ng-click="alertSortPredicate = 'action'; reverse=!reverse">Action</a>
-	  </th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr ng-repeat="alert in alerts | filter:search | orderBy:alertSortPredicate:reverse" ng-class="alert.priority | priorityToClass">
-          <td>{{alert.topic}}</td>
-		  <td>{{alert.subtopic}}</td>
-		  <td>{{alertsGroup.server}}</td>
-          <td>{{alert.message | filter:ellipsis:20}}</td>
-          <td>{{alert.date | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
-          <td>{{alert.priority | priorityToText}}</td>
-          <td>
-			<a    ng-if="alert.action.indexOf('http') === 0" ng-href="{{alert.action}}" target="_blank">{{alert.action}}</a>
-			<span ng-if="alert.action.indexOf('http') !== 0">{{alert.action}}<span>
+                                <span ng-if="'topic' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                <a href="" ng-click="alertSortPredicate = 'topic'; reverse=!reverse">Topic</a>
+                                </th>
+                                <th>
+                                    <span ng-if="'subtopic' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                    <span ng-if="'subtopic' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    <a href="" ng-click="alertSortPredicate = 'subtopic'; reverse=!reverse">Sous-topic</a>
+                                </th>
+                                <th>
+                                    <span ng-if="'server' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                    <span ng-if="'server' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    <a href="" ng-click="alertSortPredicate = 'server'; reverse=!reverse">Serveur</a>
+                                </th>
+                                <th>
+                                    <span ng-if="'message' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                    <span ng-if="'message' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    <a href="" ng-click="alertSortPredicate = 'message'; reverse=!reverse">Message</a>
+                                </th>
+                                <th>
+                                    <span ng-if="'date' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                    <span ng-if="'date' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    <a href="" ng-click="alertSortPredicate = 'date'; reverse=!reverse">Date</a>
+                                </th>
+                                <th>
+                                    <span ng-if="'priority' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                    <span ng-if="'priority' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    <a href="" ng-click="alertSortPredicate = 'priority'; reverse=!reverse">Priorité</a>
+                                </th>
+                                <th>
+                                    <span ng-if="'action' == alertSortPredicate &&   reverse" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                    <span ng-if="'action' == alertSortPredicate && ! reverse" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    <a href="" ng-click="alertSortPredicate = 'action'; reverse=!reverse">Action</a>
+                                </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="alert in alerts | filter:search | orderBy:alertSortPredicate:reverse" ng-class="alert.priority | priorityToClass">
+                                <td>{{alert.topic}}</td>
+                                <td>{{alert.subtopic}}</td>
+                                <td>{{alertsGroup.server}}</td>
+                                <td>{{alert.message | filter:ellipsis:20}}</td>
+                                <td>{{alert.date | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
+                                <td>{{alert.priority | priorityToText}}</td>
+                                <td>
+                                    <a ng-if="alert.action.indexOf('http') === 0" ng-href="{{alert.action}}" target="_blank">{{alert.action}}</a>
+                                    <span ng-if="alert.action.indexOf('http') !== 0">{{alert.action}}<span>
+
 		  </td>
+
       </tr>
+
    </tbody>
+
 </table>

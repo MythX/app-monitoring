@@ -3,26 +3,26 @@
 
 'use strict';
 
-var express	       = require('express');
-var http	       = require('http');
-var path	       = require('path');
-var bodyParser     = require('body-parser');
+var express = require('express');
+var http = require('http');
+var path = require('path');
+var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
-var auth           = require('http-auth');
-var fs             = require('fs');
+var auth = require('http-auth');
+var fs = require('fs');
 
-var alert        = require('./routes/alerts');
-var alertsGroup  = require('./routes/alertsGroup');
-var socket       = require('./routes/socket');
-var logger       = require("./utils/logger");
+var alert = require('./routes/alerts');
+var alertsGroup = require('./routes/alertsGroup');
+var socket = require('./routes/socket');
+var logger = require("./utils/logger");
 
 require('express-namespace');
 
 // Create the core web app container (`app`), bind and HTTP server to it
 // (`server`) and determine the full path for public assets.
-var app    = express();
+var app = express();
 var server = http.createServer(app);
-var io     = require('socket.io')(server);
+var io = require('socket.io')(server);
 
 var publicPath = path.join(__dirname) + '/assets/';
 var httpAuthentificationFilePath = path.join(__dirname) + '/private/users.htpasswd';
@@ -31,14 +31,14 @@ var httpAuthentificationFilePath = path.join(__dirname) + '/private/users.htpass
 // HTTP authentification 
 // ---------------------
 if (fs.existsSync(httpAuthentificationFilePath)) {
-	logger.info('Using http authentification file (' + httpAuthentificationFilePath + ')');
-	var basic = auth.basic({
-		realm: "Restricted Area.",
-		file: httpAuthentificationFilePath
-	});
-	app.use(auth.connect(basic));
+    logger.info('Using http authentification file (' + httpAuthentificationFilePath + ')');
+    var basic = auth.basic({
+        realm: "Restricted Area.",
+        file: httpAuthentificationFilePath
+    });
+    app.use(auth.connect(basic));
 } else {
-	logger.warn('No http authentification file found (' + httpAuthentificationFilePath + ')');
+    logger.warn('No http authentification file found (' + httpAuthentificationFilePath + ')');
 }
 
 
@@ -46,9 +46,9 @@ if (fs.existsSync(httpAuthentificationFilePath)) {
 // ---------------
 var jsonParser = bodyParser.json();
 
-app.get('/alertsGroup', alertsGroup.findAll);		// only opened alerts
+app.get('/alertsGroup', alertsGroup.findAll); // only opened alerts
 app.get('/alertsGroup/:id', alertsGroup.findById);
-app.get('/alertsInGroup/:id', alert.findByGroupId);	// that's not an error ! ;)
+app.get('/alertsInGroup/:id', alert.findByGroupId); // that's not an error ! ;)
 app.post('/alertsGroup', jsonParser, alertsGroup.add);
 app.put('/alertsGroup', jsonParser, alertsGroup.update);
 app.delete('/alertsGroup/:id', alertsGroup.delete);
@@ -68,8 +68,8 @@ app.use(methodOverride());
 app.use(express.static(publicPath));
 
 
-server.listen(app.get('port'), process.env.OPENSHIFT_NODEJS_IP || server.INADDR_ANY, function(){
-  logger.info('Express server listening on port ' + app.get('port'));
+server.listen(app.get('port'), process.env.OPENSHIFT_NODEJS_IP || server.INADDR_ANY, function() {
+    logger.info('Express server listening on port ' + app.get('port'));
 });
 
 
@@ -81,7 +81,7 @@ io.sockets.on('connection', function(s) {
             socket.onConnection(s, alertsGroupList, alertList);
         });
     });
-    
+
     s.on('refresh', function() {
         logger.verbose('client want fresh data');
         alert.findAllAndTrigger(function(alertList) {
@@ -97,4 +97,3 @@ alertsGroup.setOnChangeHook(function(newAlertList) {
         socket.broadcast_alert_list_changed(io.sockets, alertsGroupList, newAlertList);
     });
 });
-

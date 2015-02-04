@@ -80,3 +80,23 @@ Mongodb connection
 ==================
 
 You can configure your database connection in `utils/mongo-connection.js`.
+
+
+Cleaning code
+=============
+
+```
+# install js-beautify (see https://www.npmjs.com/package/js-beautify)
+npm -g install js-beautify
+
+# move and clean sources
+cd APP_MONITORING_SOURCE_DIRECTORY
+rm  -fr node_modules assets/inc
+
+# re-indent web files
+file_type_array=("js" "css" "html")
+for file_type in "${file_type_array[@]}"
+do
+find . -name "*.${file_type}" -exec js-beautify --replace --type=${file_type} {} \;
+done
+```
