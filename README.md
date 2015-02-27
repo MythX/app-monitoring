@@ -22,7 +22,7 @@ When the VM is started, you can launch the web server
     vagrant ssh
 	cd /vagrant
 	node server.js
-	
+
 
 Now the server is running, how can I send alerts ?
 ==================================================
@@ -49,8 +49,8 @@ Push a new alert :
 Retrieve opened alert list :
 
     http://127.0.0.1:8080/alertsGroup
-	
-	
+
+
 Basic HTTP authentication
 ===========================
 
@@ -67,7 +67,7 @@ Default openshift card comes with an old version of npm, which doesn't support m
 So, before pushing on openshift repo, I run :
 
     bower install
-	
+
 Note that you may need to configure the proxy, in `.bowerrc` :
 
     "proxy" : "http://proxy.priv.atos.fr:3128",
@@ -89,14 +89,7 @@ Cleaning code
 # install js-beautify (see https://www.npmjs.com/package/js-beautify)
 npm -g install js-beautify
 
-# move and clean sources
-cd APP_MONITORING_SOURCE_DIRECTORY
-rm  -fr node_modules assets/inc
 
-# re-indent web files
-file_type_array=("js" "css" "html")
-for file_type in "${file_type_array[@]}"
-do
-find . -name "*.${file_type}" -exec js-beautify --replace --type=${file_type} {} \;
-done
+# use gulp task (re-indent web files)
+gulp prettify-code
 ```
