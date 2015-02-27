@@ -61,6 +61,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="alertsGroup in alertsGroups | filter:search | orderBy:alertsGroupSortPredicate:reverse" ng-click="showAlert(alertsGroup)" ng-class="alertsGroup.priority | priorityToClass">
+            <td><code><a ng-href="#/alert-list/{{alertsGroup._id}}">{{alertsGroup._id}}</a></code>&nbsp;<span class="badge">{{alertsGroup.occurenceCount}}</span>
             </td>
             <td>{{alertsGroup.topic}}</td>
             <td>{{alertsGroup.subtopic}}</td>
