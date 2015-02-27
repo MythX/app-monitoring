@@ -5,7 +5,6 @@
     <input type="text" class="form-control" ng-model="search" class="search-query" placeholder="Quel filtre voulez-vous appliquer ?" aria-describedby="filter-addon" />
 </div>
 
-
 <br/>
 <br/>
 
@@ -74,12 +73,8 @@
             <td>{{alertsGroup.endDate | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
             <td>
                 <a ng-if="alertsGroup.action.indexOf('http') === 0" ng-href="{{alertsGroup.action}}" target="_blank">{{alertsGroup.action}}</a>
-                <span ng-if="alertsGroup.action.indexOf('http') !== 0">{{alertsGroup.action}}<span>
-
-		  </td>
-
-      </tr>
-
-   </tbody>
-
+                <span ng-if="alertsGroup.action.indexOf('http') !== 0">{{alertsGroup.action}}</span>
+            </td>
+        </tr>
+    </tbody>
 </table>
