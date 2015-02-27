@@ -18,4 +18,8 @@ function AlertsGroupListController($scope, $location) {
 
   // default sort
   $scope.alertsGroupSortPredicate = 'priority'; // magic alphabetic sort ! ;)
+
+  $scope.showAlert = function(alert) {
+    $location.path('alert-list/' + alert._id);
+  }
 };
